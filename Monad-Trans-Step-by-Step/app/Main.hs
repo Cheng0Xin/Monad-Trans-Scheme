@@ -20,5 +20,8 @@ main =
     return (WOM.eval0 Map.empty exampleExp) >>= print
     WM.eval1 Map.empty exampleExp >>= print
     print . runIdentity . runExceptT $ WM.eval2 Map.empty exampleExp
+    print $ WM.runEval3 (Map.empty) (WM.eval3 exampleExp)
+
+    
 
     
