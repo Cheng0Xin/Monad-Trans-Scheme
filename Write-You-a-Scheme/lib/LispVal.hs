@@ -31,4 +31,9 @@ data IFunc = IFunc { fn :: [LispVal] -> Eval LispVal}
 
 type EnvCtx = Map.Map T.Text LispVal
 
-newtype Eval a = Eval { unEval :: ReaderT EnvCtx IO a}
+newtype Eval a = Eval { unEval :: ReaderT EnvCtx IO a }
+  deriving (Monad, Functor, Applicative, MonadReader EnvCtx, MonadIO)
+
+showVal :: LispVal -> T.Text
+showVal (Atom t) = t
+showVal (List contents) = T.concat ["(", T.unwords $ showVal <$> contents, ")"]
